@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>Transactions Analysis</title>
+<title>Transactions Analysis'</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13102,14 +13102,57 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="Run-the-next-cell-on-the-first-time-only-to-create-CSV-files">Run the next cell on the first time only to create CSV files<a class="anchor-link" href="#Run-the-next-cell-on-the-first-time-only-to-create-CSV-files">&#182;</a></h5>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Open file KPMG_VI_New_raw_data_update_final.xlsx and save sheets as csv files skipping first row coz it contains a comment</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Reading excel with pd.read_excel</span>
+<span class="c1"># Passing `sheet_name=None` returns a dictionary with the form {sheet_name: dataframe}</span>
+<span class="n">sheets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;KPMG_VI_New_raw_data_update_final.xlsx&#39;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># To skip the 1st comment row in Excel sheet</span>
 
-<span class="n">transactions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;KPMG_VI_New_raw_data_update_final.xlsx&#39;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;Transactions&#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="c1"># loop through the dictionary and save csv</span>
+<span class="k">for</span> <span class="n">sheet_name</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">sheets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{sheet_name}</span><span class="s1">.csv&#39;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># To avoid saving Index Column #  f-string in Python 3 [http://zetcode.com/python/fstring/]</span>
+
+<span class="c1"># When this method was used, the datetime datatype in transaction_date was read as string not datetime</span>
+    
+<span class="c1"># Listing sheet names</span>
+<span class="n">sheets</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">transactions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;KPMG_VI_New_raw_data_update_final.xlsx&#39;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;Transactions&#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create Transactions dataframe from Transactions.csv</span>
+<span class="n">transactions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;transactions.csv&#39;</span><span class="p">)</span>
 <span class="n">transactions</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 
@@ -13123,7 +13166,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[2]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -13255,7 +13298,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">transactions</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -13271,7 +13314,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
@@ -13403,7 +13446,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">transactions</span><span class="o">.</span><span class="n">shape</span>
@@ -13419,7 +13462,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -13436,7 +13479,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">transactions</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
@@ -13493,7 +13536,7 @@ memory usage: 2.0+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Wondering what other values than 0 &amp; 1 it the online_order column has. This probably represents true and false.</span>
@@ -13510,7 +13553,7 @@ memory usage: 2.0+ MB
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[6]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -13529,7 +13572,7 @@ Name: online_order, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Changing float data type in online_order into booleans</span>
@@ -13545,7 +13588,7 @@ Name: online_order, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">transactions</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
@@ -13568,22 +13611,22 @@ Name: online_order, dtype: int64</pre>
 <pre>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 RangeIndex: 20000 entries, 0 to 19999
 Data columns (total 13 columns):
- #   Column                   Non-Null Count  Dtype         
----  ------                   --------------  -----         
- 0   transaction_id           20000 non-null  int64         
- 1   product_id               20000 non-null  int64         
- 2   customer_id              20000 non-null  int64         
- 3   transaction_date         20000 non-null  datetime64[ns]
- 4   online_order             20000 non-null  bool          
- 5   order_status             20000 non-null  object        
- 6   brand                    19803 non-null  object        
- 7   product_line             19803 non-null  object        
- 8   product_class            19803 non-null  object        
- 9   product_size             19803 non-null  object        
- 10  list_price               20000 non-null  float64       
- 11  standard_cost            19803 non-null  float64       
- 12  product_first_sold_date  19803 non-null  float64       
-dtypes: bool(1), datetime64[ns](1), float64(3), int64(3), object(5)
+ #   Column                   Non-Null Count  Dtype  
+---  ------                   --------------  -----  
+ 0   transaction_id           20000 non-null  int64  
+ 1   product_id               20000 non-null  int64  
+ 2   customer_id              20000 non-null  int64  
+ 3   transaction_date         20000 non-null  object 
+ 4   online_order             20000 non-null  bool   
+ 5   order_status             20000 non-null  object 
+ 6   brand                    19803 non-null  object 
+ 7   product_line             19803 non-null  object 
+ 8   product_class            19803 non-null  object 
+ 9   product_size             19803 non-null  object 
+ 10  list_price               20000 non-null  float64
+ 11  standard_cost            19803 non-null  float64
+ 12  product_first_sold_date  19803 non-null  float64
+dtypes: bool(1), float64(3), int64(3), object(6)
 memory usage: 1.9+ MB
 </pre>
 </div>
@@ -13595,7 +13638,7 @@ memory usage: 1.9+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">transactions</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
@@ -13611,7 +13654,7 @@ memory usage: 1.9+ MB
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -13651,220 +13694,204 @@ memory usage: 1.9+ MB
   </thead>
   <tbody>
     <tr>
-      <th>5004</th>
-      <td>5005</td>
-      <td>87</td>
-      <td>2140</td>
-      <td>2017-07-17</td>
-      <td>False</td>
-      <td>Approved</td>
-      <td>OHM Cycles</td>
-      <td>Standard</td>
-      <td>medium</td>
-      <td>medium</td>
-      <td>1636.90</td>
-      <td>44.71</td>
-      <td>40410.0</td>
-    </tr>
-    <tr>
-      <th>956</th>
-      <td>957</td>
-      <td>12</td>
-      <td>2118</td>
-      <td>2017-08-14</td>
-      <td>False</td>
-      <td>Approved</td>
-      <td>Giant Bicycles</td>
-      <td>Standard</td>
-      <td>medium</td>
-      <td>large</td>
-      <td>1765.30</td>
-      <td>709.48</td>
-      <td>38193.0</td>
-    </tr>
-    <tr>
-      <th>19397</th>
-      <td>19398</td>
-      <td>99</td>
-      <td>730</td>
-      <td>2017-11-30</td>
+      <th>7584</th>
+      <td>7585</td>
+      <td>61</td>
+      <td>1304</td>
+      <td>2017-12-27</td>
       <td>True</td>
       <td>Approved</td>
-      <td>OHM Cycles</td>
+      <td>Norco Bicycles</td>
       <td>Standard</td>
       <td>medium</td>
-      <td>medium</td>
-      <td>1227.34</td>
-      <td>770.89</td>
-      <td>34556.0</td>
+      <td>small</td>
+      <td>586.45</td>
+      <td>521.94</td>
+      <td>33429.0</td>
     </tr>
     <tr>
-      <th>9816</th>
-      <td>9817</td>
-      <td>6</td>
-      <td>3027</td>
-      <td>2017-11-29</td>
+      <th>7972</th>
+      <td>7973</td>
+      <td>33</td>
+      <td>891</td>
+      <td>2017-12-10</td>
       <td>False</td>
-      <td>Approved</td>
+      <td>Cancelled</td>
       <td>OHM Cycles</td>
-      <td>Standard</td>
-      <td>high</td>
+      <td>Road</td>
       <td>medium</td>
-      <td>227.88</td>
-      <td>136.73</td>
-      <td>38258.0</td>
+      <td>small</td>
+      <td>1810.00</td>
+      <td>1610.90</td>
+      <td>34071.0</td>
     </tr>
     <tr>
-      <th>12593</th>
-      <td>12594</td>
-      <td>46</td>
-      <td>1253</td>
-      <td>2017-12-26</td>
-      <td>True</td>
-      <td>Approved</td>
-      <td>Solex</td>
-      <td>Standard</td>
-      <td>low</td>
-      <td>medium</td>
-      <td>1289.85</td>
-      <td>74.51</td>
-      <td>39427.0</td>
-    </tr>
-    <tr>
-      <th>16505</th>
-      <td>16506</td>
-      <td>22</td>
-      <td>1632</td>
-      <td>2017-01-08</td>
-      <td>True</td>
-      <td>Approved</td>
-      <td>Solex</td>
-      <td>Standard</td>
-      <td>medium</td>
-      <td>medium</td>
-      <td>575.27</td>
-      <td>431.45</td>
-      <td>35160.0</td>
-    </tr>
-    <tr>
-      <th>12231</th>
-      <td>12232</td>
-      <td>10</td>
-      <td>1528</td>
-      <td>2017-03-11</td>
-      <td>False</td>
-      <td>Approved</td>
-      <td>Solex</td>
-      <td>Standard</td>
-      <td>medium</td>
-      <td>medium</td>
-      <td>1945.43</td>
-      <td>333.18</td>
-      <td>37499.0</td>
-    </tr>
-    <tr>
-      <th>12312</th>
-      <td>12313</td>
-      <td>89</td>
-      <td>2320</td>
-      <td>2017-06-10</td>
+      <th>5760</th>
+      <td>5761</td>
+      <td>0</td>
+      <td>1003</td>
+      <td>2017-02-20</td>
       <td>False</td>
       <td>Approved</td>
       <td>WeareA2B</td>
-      <td>Touring</td>
+      <td>Standard</td>
       <td>medium</td>
-      <td>large</td>
-      <td>1362.99</td>
-      <td>57.74</td>
-      <td>34079.0</td>
+      <td>medium</td>
+      <td>60.34</td>
+      <td>45.26</td>
+      <td>34165.0</td>
     </tr>
     <tr>
-      <th>17800</th>
-      <td>17801</td>
-      <td>69</td>
-      <td>219</td>
-      <td>2017-04-16</td>
-      <td>True</td>
+      <th>14994</th>
+      <td>14995</td>
+      <td>82</td>
+      <td>2712</td>
+      <td>2017-01-04</td>
+      <td>False</td>
       <td>Approved</td>
       <td>Giant Bicycles</td>
       <td>Road</td>
       <td>medium</td>
       <td>medium</td>
-      <td>792.90</td>
-      <td>594.68</td>
-      <td>33879.0</td>
+      <td>1538.99</td>
+      <td>829.65</td>
+      <td>37337.0</td>
     </tr>
     <tr>
-      <th>15837</th>
-      <td>15838</td>
-      <td>65</td>
-      <td>3041</td>
-      <td>2017-08-28</td>
+      <th>8393</th>
+      <td>8394</td>
+      <td>39</td>
+      <td>3046</td>
+      <td>2017-05-16</td>
+      <td>False</td>
+      <td>Approved</td>
+      <td>Giant Bicycles</td>
+      <td>Standard</td>
+      <td>medium</td>
+      <td>large</td>
+      <td>1812.75</td>
+      <td>582.48</td>
+      <td>40336.0</td>
+    </tr>
+    <tr>
+      <th>17517</th>
+      <td>17518</td>
+      <td>49</td>
+      <td>1208</td>
+      <td>2017-02-07</td>
+      <td>False</td>
+      <td>Approved</td>
+      <td>Trek Bicycles</td>
+      <td>Road</td>
+      <td>medium</td>
+      <td>medium</td>
+      <td>533.51</td>
+      <td>400.13</td>
+      <td>41064.0</td>
+    </tr>
+    <tr>
+      <th>5854</th>
+      <td>5855</td>
+      <td>90</td>
+      <td>2637</td>
+      <td>2017-08-05</td>
       <td>True</td>
       <td>Approved</td>
-      <td>WeareA2B</td>
+      <td>Norco Bicycles</td>
+      <td>Standard</td>
+      <td>low</td>
+      <td>medium</td>
+      <td>363.01</td>
+      <td>290.41</td>
+      <td>42458.0</td>
+    </tr>
+    <tr>
+      <th>5614</th>
+      <td>5615</td>
+      <td>11</td>
+      <td>1903</td>
+      <td>2017-12-14</td>
+      <td>True</td>
+      <td>Approved</td>
+      <td>Trek Bicycles</td>
+      <td>Standard</td>
+      <td>medium</td>
+      <td>small</td>
+      <td>1775.81</td>
+      <td>1580.47</td>
+      <td>34586.0</td>
+    </tr>
+    <tr>
+      <th>8754</th>
+      <td>8755</td>
+      <td>58</td>
+      <td>614</td>
+      <td>2017-02-07</td>
+      <td>False</td>
+      <td>Approved</td>
+      <td>OHM Cycles</td>
       <td>Standard</td>
       <td>medium</td>
       <td>medium</td>
-      <td>1807.45</td>
-      <td>778.69</td>
+      <td>912.52</td>
+      <td>141.40</td>
+      <td>42172.0</td>
+    </tr>
+    <tr>
+      <th>4359</th>
+      <td>4360</td>
+      <td>63</td>
+      <td>2985</td>
+      <td>2017-09-22</td>
+      <td>True</td>
+      <td>Approved</td>
+      <td>Solex</td>
+      <td>Standard</td>
+      <td>medium</td>
+      <td>medium</td>
+      <td>1483.20</td>
+      <td>99.59</td>
       <td>42105.0</td>
     </tr>
     <tr>
-      <th>4266</th>
-      <td>4267</td>
-      <td>96</td>
-      <td>1464</td>
-      <td>2017-07-28</td>
+      <th>8776</th>
+      <td>8777</td>
+      <td>12</td>
+      <td>502</td>
+      <td>2017-03-06</td>
       <td>False</td>
       <td>Approved</td>
       <td>WeareA2B</td>
-      <td>Road</td>
-      <td>low</td>
-      <td>small</td>
-      <td>1172.78</td>
-      <td>1043.77</td>
-      <td>38002.0</td>
-    </tr>
-    <tr>
-      <th>9346</th>
-      <td>9347</td>
-      <td>8</td>
-      <td>3469</td>
-      <td>2017-08-06</td>
-      <td>False</td>
-      <td>Approved</td>
-      <td>Solex</td>
-      <td>Road</td>
+      <td>Standard</td>
       <td>medium</td>
-      <td>small</td>
-      <td>1703.52</td>
-      <td>1516.13</td>
-      <td>41701.0</td>
+      <td>medium</td>
+      <td>1231.15</td>
+      <td>161.60</td>
+      <td>38216.0</td>
     </tr>
     <tr>
-      <th>12364</th>
-      <td>12365</td>
-      <td>52</td>
-      <td>2906</td>
-      <td>2017-03-03</td>
-      <td>False</td>
+      <th>4637</th>
+      <td>4638</td>
+      <td>56</td>
+      <td>2736</td>
+      <td>2017-11-18</td>
+      <td>True</td>
       <td>Approved</td>
       <td>OHM Cycles</td>
-      <td>Road</td>
+      <td>Standard</td>
       <td>medium</td>
       <td>medium</td>
-      <td>1280.28</td>
-      <td>829.51</td>
-      <td>40779.0</td>
+      <td>183.86</td>
+      <td>137.90</td>
+      <td>34143.0</td>
     </tr>
     <tr>
-      <th>13575</th>
-      <td>13576</td>
+      <th>16180</th>
+      <td>16181</td>
       <td>23</td>
-      <td>2594</td>
-      <td>2017-09-30</td>
-      <td>True</td>
+      <td>1104</td>
+      <td>2017-03-08</td>
+      <td>False</td>
       <td>Approved</td>
       <td>Norco Bicycles</td>
       <td>Mountain</td>
@@ -13875,20 +13902,36 @@ memory usage: 1.9+ MB
       <td>34244.0</td>
     </tr>
     <tr>
-      <th>11776</th>
-      <td>11777</td>
-      <td>39</td>
-      <td>425</td>
-      <td>2017-04-30</td>
+      <th>9757</th>
+      <td>9758</td>
+      <td>16</td>
+      <td>701</td>
+      <td>2017-04-02</td>
       <td>False</td>
       <td>Approved</td>
-      <td>Giant Bicycles</td>
+      <td>Norco Bicycles</td>
       <td>Standard</td>
+      <td>high</td>
+      <td>small</td>
+      <td>1661.92</td>
+      <td>1479.11</td>
+      <td>34165.0</td>
+    </tr>
+    <tr>
+      <th>16168</th>
+      <td>16169</td>
+      <td>17</td>
+      <td>2668</td>
+      <td>2017-03-17</td>
+      <td>False</td>
+      <td>Approved</td>
+      <td>Solex</td>
+      <td>Standard</td>
+      <td>high</td>
       <td>medium</td>
-      <td>large</td>
-      <td>1812.75</td>
-      <td>582.48</td>
-      <td>35560.0</td>
+      <td>1024.66</td>
+      <td>614.80</td>
+      <td>35378.0</td>
     </tr>
   </tbody>
 </table>
@@ -13903,7 +13946,7 @@ memory usage: 1.9+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Checking duplicate values</span>
@@ -13970,13 +14013,13 @@ customer_id
 Name: customer_id, Length: 3494, dtype: int64
 
 transaction_date
-2017-02-14    82
 2017-08-18    82
+2017-02-14    82
 2017-10-15    76
 2017-01-31    73
 2017-12-19    71
               ..
-2017-01-12    38
+2017-08-29    38
 2017-12-07    37
 2017-03-29    36
 2017-09-25    35
@@ -14077,29 +14120,69 @@ Name: product_first_sold_date, Length: 100, dtype: int64
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Wondering what is the total sum customer 2183 paid</span>
+<span class="n">transactions</span><span class="p">[</span><span class="n">transactions</span><span class="o">.</span><span class="n">customer_id</span> <span class="o">==</span> <span class="mi">2183</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[13]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>transaction_id                                                        128141
+product_id                                                               601
+customer_id                                                            30562
+transaction_date           2017-05-092017-12-202017-06-112017-09-172017-1...
+online_order                                                               4
+order_status               ApprovedApprovedApprovedApprovedApprovedApprov...
+brand                      Giant BicyclesTrek BicyclesGiant BicyclesSolex...
+product_line               StandardStandardStandardRoadTouringRoadStandar...
+product_class              mediummediummediummediumlowmediumhighmediumhig...
+product_size               largesmalllargemediummediumsmallmediummediumme...
+list_price                                                           19071.3
+standard_cost                                                          12558
+product_first_sold_date                                               519283
+dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Conclusions:">Conclusions:<a class="anchor-link" href="#Conclusions:">&#182;</a></h2><h2 id="No-description-of-the-data-is-provied."><em>No description of the data is provied.</em><a class="anchor-link" href="#No-description-of-the-data-is-provied.">&#182;</a></h2><h3 id="A)-Assessment-using-MS-Excel">A) Assessment using MS Excel<a class="anchor-link" href="#A)-Assessment-using-MS-Excel">&#182;</a></h3><h4 id="Visual-assessment-showed-2-consistency-issues:">Visual assessment showed 2 consistency issues:<a class="anchor-link" href="#Visual-assessment-showed-2-consistency-issues:">&#182;</a></h4>
-<pre><code>1- The currency of the list_price is not indicated although it is indicated in standard_cost.
-2- Some values in the standard_cost lack the currnecny sign (Their data type is general instead of currency)
+<pre><code>1- The currency of the list price is not indicated although it is indicated in standard cost.
+2- Some values in the standard cost lack the currnecny sign (Their data type is general instead of currency)
 
 </code></pre>
 <h3 id="B)-Assessment-using-Python-in-Jupyter-Notebook">B) Assessment using Python in Jupyter Notebook<a class="anchor-link" href="#B)-Assessment-using-Python-in-Jupyter-Notebook">&#182;</a></h3><h4 id="Visual-&amp;-Programmatic-assessments-showed-the-following-issues">Visual &amp; Programmatic assessments showed the following issues<a class="anchor-link" href="#Visual-&amp;-Programmatic-assessments-showed-the-following-issues">&#182;</a></h4>
 <pre><code>1- Accuracy:
     - product_first_sold_date doesn't contain date values as the culumn name implies.
-
 2- Completeness:
     - 197 Missing values in brand, product_line, product_class, product_size, standard_cost, and product_first_sold_date.
     - 360 Missing values in online_order.
-
-3- Consistency:
-    - As discussed above in Excel assessment.
-
-4- Validity:
-    - Invalid data type for all ID columns. They should be strings not integers.
-    - Online_order data type should be boolean not float64.
-    - Since description of the data is not provided, we can't decide what data type should the product_first_sold_date column contain. However, the name implies it should containg data of type datetime64[ns]</code></pre>
+3- Validity:
+    - </code></pre>
 
 </div>
 </div>
